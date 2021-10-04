@@ -15,7 +15,7 @@ static int  my_strlen(const char *str)
 }
 
 // pattern = string with glob / string = without 
-int my_fnmatch(const char *pattern, const char *string)
+static int my_fnmatch_rec(const char *pattern, const char *string)
 {
     int p_i = 0;
     int s_i = 0;
@@ -51,5 +51,19 @@ int my_fnmatch(const char *pattern, const char *string)
         return 0;
     }
     return 1;
+}
+
+int my_fnmatch(const char *pattern, const char *string)
+{
+    if ((!pattern && string) || (pattern && !string))
+    {
+        return 0;
+    }
+    else if (!pattern && !string)
+    {
+        return 1;
+    }
+
+    my_fnmatch_rec(pattern, string);
 }
 
