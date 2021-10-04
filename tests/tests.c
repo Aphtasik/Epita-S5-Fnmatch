@@ -18,7 +18,7 @@ Test(basic, same_text)
 Test(basic, different_text)
 {
     int res = my_fnmatch("hello you", "hello world");
-    cr_assert_neq(res, 0, "GOT: %d, EXPECTED: %d", res, 0);
+    cr_assert_eq(res, 0, "GOT: %d, EXPECTED: %d", res, 0);
 }
 
 Test(basic, interrogation)
