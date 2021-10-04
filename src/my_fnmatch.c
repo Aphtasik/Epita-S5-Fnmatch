@@ -40,9 +40,13 @@ static int my_fnmatch_rec(const char *pattern, const char *string, int p_len,
                 }
                 break;
             case '?':
-                s_i++;
-                p_i++;
-                continue;
+                if (s_i < s_len)
+                {
+                    s_i++;
+                    p_i++;
+                    continue;
+                }
+                return 0;
             default:
                 if (string[s_i] == c)
                 {
