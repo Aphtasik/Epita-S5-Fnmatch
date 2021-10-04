@@ -15,15 +15,10 @@ static int  my_strlen(const char *str)
 }
 
 // pattern = string with glob / string = without 
-static int my_fnmatch_rec(const char *pattern, const char *string)
+static int my_fnmatch_rec(const char *pattern, const char *string, int p_len,
+        int s_len, int p_i, int s_i)
 {
-    int p_i = 0;
-    int s_i = 0;
-    
     char c;
-
-    int p_len = my_strlen(pattern);
-    int s_len = my_strlen(string);
 
     while (p_i < p_len || s_i < s_len)
     {
@@ -34,6 +29,16 @@ static int my_fnmatch_rec(const char *pattern, const char *string)
             c = pattern[p_i];
             switch (c)
             {
+            case '*':
+                while (s_i <= s_len)
+                {
+                    if (my_fnmatch_rec(pattern, string, p_len, s_len, p_i + 1, s_i) == 1)
+                    {
+                        return 1;
+                    }
+                    s_i++;
+                }
+                break;
             case '?':
                 s_i++;
                 p_i++;
@@ -64,6 +69,9 @@ int my_fnmatch(const char *pattern, const char *string)
         return 1;
     }
 
-    return my_fnmatch_rec(pattern, string);
+    int p_len = my_strlen(pattern);
+    int s_len = my_strlen(string);
+
+    return my_fnmatch_rec(pattern, string, p_len, s_len, 0, 0);
 }
 

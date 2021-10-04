@@ -45,20 +45,38 @@ Test(interrogation, multiple)
     cr_assert_eq(res, 1, "GOT: %d, EXPECTED: %d", res, 1);
 }
 
-Test(stars, stars_to_end)
+Test(stars, to_end)
 {
-    int res = my_fnmatch("hell*", "hello world");
+    int res = my_fnmatch("hel*", "hello world");
     cr_assert_eq(res, 1, "GOT: %d, EXPECTED: %d", res, 1);
 }
 
-Test(stars, stars_middle)
+Test(stars, middle)
 {
     int res = my_fnmatch("hell*ld", "hello world");
     cr_assert_eq(res, 1, "GOT: %d, EXPECTED: %d", res, 1);
 }
 
-Test(stars, stars_start)
+Test(stars, start)
 {
     int res = my_fnmatch("*world", "hello world");
     cr_assert_eq(res, 1, "GOT: %d, EXPECTED: %d", res, 1);
+}
+
+Test(stars, multiple)
+{
+    int res = my_fnmatch("h*world", "hello world");
+    cr_assert_eq(res, 1, "GOT: %d, EXPECTED: %d", res, 1);
+}
+
+Test(cocktail, stars_question)
+{
+    int res = my_fnmatch("hel*?orld", "hello world");
+    cr_assert_eq(res, 1, "GOT: %d, EXPECTED: %d", res, 1);
+}
+
+Test(cocktail, stars_question_fail)
+{
+    int res = my_fnmatch("*?", "");
+    cr_assert_eq(res, 0, "GOT: %d, EXPECTED: %d", res, 0);
 }
