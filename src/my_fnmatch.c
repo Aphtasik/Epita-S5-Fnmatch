@@ -64,6 +64,6 @@ int my_fnmatch(const char *pattern, const char *string)
         return 1;
     }
 
-    my_fnmatch_rec(pattern, string);
+    return my_fnmatch_rec(pattern, string);
 }
 
