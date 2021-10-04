@@ -34,6 +34,10 @@ int my_fnmatch(const char *pattern, const char *string)
             c = pattern[p_i];
             switch (c)
             {
+            case '?':
+                s_i++;
+                p_i++;
+                continue;
             default:
                 if (string[s_i] == c)
                 {

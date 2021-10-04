@@ -1,12 +1,12 @@
 CC=gcc
-CFLAGS= # -std=c99 -pedantic -Werror -Wall -Wextra
+CFLAGS= -std=c99 -pedantic -Werror -Wall -Wextra -g
 LDFLAGS= -lcriterion
 
 main: src/main.o src/my_fnmatch.o
-	$(CC) -o fnmatch $^
+	$(CC) -o fnmatch $^ -g
 
 check: src/my_fnmatch.o tests/tests.o
-	$(CC) -o fnmatch $^ $(LDFLAGS)
+	$(CC) -o fnmatch $^ $(LDFLAGS) -g
 	./fnmatch
 
 library: src/my_fnmatch.o

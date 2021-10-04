@@ -17,29 +17,47 @@ Test(basic, same_text)
 
 Test(basic, different_text)
 {
-    int res = my_fnmatch("hello you", "hello world");
+    int res = my_fnmatch("hello youuu", "hello world");
     cr_assert_eq(res, 0, "GOT: %d, EXPECTED: %d", res, 0);
 }
 
-Test(basic, interrogation)
+Test(basic, short_pattern)
 {
-    int res = my_fnmatch("hell? you", "hello world");
+    int res = my_fnmatch("hello", "hello world");
+    cr_assert_eq(res, 0, "GOT: %d, EXPECTED: %d", res, 0);
+}
+
+Test(basic, short_string)
+{
+    int res = my_fnmatch("hello world", "hello");
+    cr_assert_eq(res, 0, "GOT: %d, EXPECTED: %d", res, 0);
+}
+
+Test(interrogation, one)
+{
+    int res = my_fnmatch("hell? world", "hello world");
     cr_assert_eq(res, 1, "GOT: %d, EXPECTED: %d", res, 1);
 }
 
-Test(basic, stars_to_end)
+Test(interrogation, multiple)
+{
+    int res = my_fnmatch("hell? wo???", "hello world");
+    cr_assert_eq(res, 1, "GOT: %d, EXPECTED: %d", res, 1);
+}
+
+Test(stars, stars_to_end)
 {
     int res = my_fnmatch("hell*", "hello world");
     cr_assert_eq(res, 1, "GOT: %d, EXPECTED: %d", res, 1);
 }
 
-Test(basic, stars_middle)
+Test(stars, stars_middle)
 {
     int res = my_fnmatch("hell*ld", "hello world");
     cr_assert_eq(res, 1, "GOT: %d, EXPECTED: %d", res, 1);
 }
 
-Test(basic, stars_start)
+Test(stars, stars_start)
 {
     int res = my_fnmatch("*world", "hello world");
     cr_assert_eq(res, 1, "GOT: %d, EXPECTED: %d", res, 1);
