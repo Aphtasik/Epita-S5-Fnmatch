@@ -3,7 +3,6 @@
 #include <stdlib.h>
 #include <stddef.h>
 #include <ctype.h>
-#include <stdio.h> //TODO: remove
 
 static int  my_strlen(const char *str, int start_i, char end_char)
 {
@@ -17,13 +16,23 @@ static int  my_strlen(const char *str, int start_i, char end_char)
 
 static int handle_hook(const char *pattern, char s_c, int *p_i)
 {
-    //check if a char btw hooks == s_c
-    //if it is incr p_i until ]
-    //else no matching
+    int neg = 1;
+    int is_found = 1;
+    *p_i += 1;
+    if (pattern[*p_i] == '!')
+    {
+        neg = 0;
+        *p_i += 1;
+        if (pattern[*p_i] == s_c)
+        {
+            is_found = 0;
+        }
+        *p_i += 1;
+    }
+
     int start = *p_i;
     int hook_len = my_strlen(pattern, start, ']');
     int end = start + hook_len;
-    int is_found = 1;
     while (pattern[*p_i] != ']')
     {
         if (pattern[*p_i] == s_c)
@@ -42,7 +51,8 @@ static int handle_hook(const char *pattern, char s_c, int *p_i)
 
     *p_i += 1;
 
-    return is_found;
+    return (is_found && neg) || (!is_found && !neg);
+//is_found && neg) || (!is_found && !neg);
 }
 
 // pattern = string with glob / string = without 
@@ -60,6 +70,13 @@ static int my_fnmatch_rec(const char *pattern, const char *string, int p_len,
             c = pattern[p_i];
             switch (c)
             {
+            case '\\':
+                 if (s_i < s_len && pattern[p_i + 1] == string[s_i])
+                 {
+                         s_i++;
+                         p_i += 2;
+                         continue;
+                 }
             case '[':
                 if (handle_hook(pattern, string[s_i], &p_i) == 0)
                 {
