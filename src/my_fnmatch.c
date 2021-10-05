@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <stddef.h>
 #include <ctype.h>
+#include <stdio.h> //TODO: remove
 
 static int  my_strlen(const char *str)
 {
@@ -12,6 +13,26 @@ static int  my_strlen(const char *str)
         len++;
     }
     return len;
+}
+
+static int handle_hook(const char *pattern, char s_c, int *p_i)
+{
+    //check if a char btw hooks == s_c
+    //if it is incr p_i until ]
+    //else no matching
+
+    while (pattern[*p_i] != ']')
+    {
+        if (pattern[*p_i] == '\0')
+        {
+            return 0;
+        }
+        *p_i += 1;
+    }
+
+    *p_i += 1;
+
+    return 1;
 }
 
 // pattern = string with glob / string = without 
@@ -29,6 +50,13 @@ static int my_fnmatch_rec(const char *pattern, const char *string, int p_len,
             c = pattern[p_i];
             switch (c)
             {
+            case '[':
+                if (handle_hook(pattern, string[s_i], &p_i))
+                {
+                    s_i++;
+                    continue;
+                }
+                return 0;
             case '*':
                 while (s_i <= s_len)
                 {

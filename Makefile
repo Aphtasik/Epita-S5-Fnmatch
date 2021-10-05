@@ -1,5 +1,5 @@
 CC=gcc
-CFLAGS= -std=c99 -pedantic -Werror -Wall -Wextra -g
+CFLAGS= -g #-std=c99 -pedantic -Werror -Wall -Wextra
 LDFLAGS= -lcriterion
 
 main: src/main.o src/my_fnmatch.o

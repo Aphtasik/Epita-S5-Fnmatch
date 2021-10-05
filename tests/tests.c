@@ -80,3 +80,21 @@ Test(cocktail, stars_question_fail)
     int res = my_fnmatch("*?", "");
     cr_assert_eq(res, 0, "GOT: %d, EXPECTED: %d", res, 0);
 }
+
+Test(set, short_set)
+{
+    int res = my_fnmatch("hell[po] world", "hello world");
+    cr_assert_eq(res, 1, "GOT: %d, EXPECTED: %d", res, 1);
+}
+
+Test(set, long_set)
+{
+    int res = my_fnmatch("hell[pqro azryt] world", "hello world");
+    cr_assert_eq(res, 1, "GOT: %d, EXPECTED: %d", res, 1);
+}
+
+Test(set, with_specials)
+{
+    int res = my_fnmatch("hello [i*[?h]orld", "hello ?orld");
+    cr_assert_eq(res, 1, "GOT: %d, EXPECTED: %d", res, 1);
+}
