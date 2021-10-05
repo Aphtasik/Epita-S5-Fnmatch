@@ -2,7 +2,6 @@
 
 #include <stdlib.h>
 #include <stddef.h>
-#include <ctype.h>
 
 static int  my_strlen(const char *str, int start_i, char end_char)
 {
@@ -39,7 +38,7 @@ static int handle_hook(const char *pattern, char s_c, int *p_i)
         {
             is_found = 0;
         }
-        else if (pattern[*p_i] == '-' && (*p_i != end - 1) || (*p_i != start + 1))
+        else if ((pattern[*p_i] == '-' && (*p_i != end - 1)) || (*p_i != start + 1))
         {
             if (s_c >= pattern[*p_i - 1] && s_c <= pattern[*p_i + 1])
             {
@@ -48,14 +47,11 @@ static int handle_hook(const char *pattern, char s_c, int *p_i)
         }
         *p_i += 1;
     }
-
     *p_i += 1;
 
     return (is_found && neg) || (!is_found && !neg);
-//is_found && neg) || (!is_found && !neg);
 }
 
-// pattern = string with glob / string = without 
 static int my_fnmatch_rec(const char *pattern, const char *string, int p_len,
         int s_len, int p_i, int s_i)
 {
@@ -63,10 +59,8 @@ static int my_fnmatch_rec(const char *pattern, const char *string, int p_len,
 
     while (p_i < p_len || s_i < s_len)
     {
-        // p_i > => normal string too long for string
         if (p_i < p_len)
         {
-            // test all cases
             c = pattern[p_i];
             switch (c)
             {
@@ -77,6 +71,7 @@ static int my_fnmatch_rec(const char *pattern, const char *string, int p_len,
                          p_i += 2;
                          continue;
                  }
+                 return 1;
             case '[':
                 if (handle_hook(pattern, string[s_i], &p_i) == 0)
                 {

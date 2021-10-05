@@ -146,3 +146,9 @@ Test(negative, special_first)
     int res = my_fnmatch("hello [!]b0de]orld", "hello world");
     cr_assert_eq(res, 0, "GOT: %d, EXPECTED: %d", res, 0);
 }
+
+Test(hard_stuff, final_boss)
+{
+    int res = my_fnmatch("[-a-\\0]bite", "0bite");
+    cr_assert_eq(res, 0, "GOT: %d, EXPECTED: %d", res, 0);
+}
