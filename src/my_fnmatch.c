@@ -22,13 +22,14 @@ static int handle_hook(const char *pattern, char s_c, int *p_i)
     {
         neg = 0;
         *p_i += 1;
-        if (pattern[*p_i] == s_c)
-        {
-            is_found = 0;
-        }
+    }
+    if (pattern[*p_i] == s_c)
+    {
+        is_found = 0;
         *p_i += 1;
     }
 
+    *p_i += 1;
     int start = *p_i;
     int hook_len = my_strlen(pattern, start, ']');
     int end = start + hook_len;

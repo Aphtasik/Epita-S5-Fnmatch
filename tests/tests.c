@@ -123,12 +123,6 @@ Test(esc, esc_esc)
     cr_assert_eq(res, 0, "GOT: %d, EXPECTED: %d", res, 0);
 }
 
-Test(esc, triple_esc)
-{
-    int res = my_fnmatch("hello \\\world", "hello world");
-    cr_assert_eq(res, 0, "GOT: %d, EXPECTED: %d", res, 0);
-}
-
 Test(negative, simple_ok)
 {
     int res = my_fnmatch("hello [!abcde]orld", "hello world");
