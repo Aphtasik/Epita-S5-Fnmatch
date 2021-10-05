@@ -5,10 +5,10 @@
 #include <ctype.h>
 #include <stdio.h> //TODO: remove
 
-static int  my_strlen(const char *str)
+static int  my_strlen(const char *str, int start_i, char end_char)
 {
     int len = 0;
-    while (str[len] != '\0')
+    while (str[start_i + len] != end_char)
     {
         len++;
     }
@@ -106,8 +106,8 @@ int my_fnmatch(const char *pattern, const char *string)
         return 1;
     }
 
-    int p_len = my_strlen(pattern);
-    int s_len = my_strlen(string);
+    int p_len = my_strlen(pattern, 0, '\0');
+    int s_len = my_strlen(string, 0, '\0');
 
     return my_fnmatch_rec(pattern, string, p_len, s_len, 0, 0);
 }

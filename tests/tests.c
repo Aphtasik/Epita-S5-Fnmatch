@@ -5,8 +5,8 @@
 
 Test(basic, empty)
 {
-    int res = my_fnmatch("", "");
-    cr_assert_eq(res, 1, "GOT: %d, EXPECTED: %d", res, 1);
+    int res = my_fnmatch("?", "");
+    cr_assert_eq(res, 0, "GOT: %d, EXPECTED: %d", res, 0);
 }
 
 Test(basic, same_text)
