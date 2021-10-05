@@ -13,4 +13,4 @@ library: src/my_fnmatch.o
 	ar csr libfnmatch.a $^
 
 clean:
-	$(RM) *.o src/*.o tests/*.o fnmatch *.a 
+	$(RM) *.o src/*.o tests/*.o fnmatch *.a .__a*
