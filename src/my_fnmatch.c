@@ -20,19 +20,24 @@ static int handle_hook(const char *pattern, char s_c, int *p_i)
     //check if a char btw hooks == s_c
     //if it is incr p_i until ]
     //else no matching
-
+    int is_found = 0;
     while (pattern[*p_i] != ']')
     {
         if (pattern[*p_i] == '\0')
         {
-            return 0;
+            return is_found;
+            *p_i += 1;
+        }
+        else if (pattern[*p_i])
+        {
+            is_found = 1;
         }
         *p_i += 1;
     }
 
     *p_i += 1;
 
-    return 1;
+    return is_found;
 }
 
 // pattern = string with glob / string = without 
